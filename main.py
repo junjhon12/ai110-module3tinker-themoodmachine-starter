@@ -30,7 +30,8 @@ def evaluate_rule_based(posts: List[str], labels: List[str]) -> float:
         # reason = analyzer.explain(text)
         # print(f'"{text}" -> predicted={predicted_label}, true={true_label} ({reason})')
 
-        print(f'"{text}" -> predicted={predicted_label}, true={true_label}')
+        reason = analyzer.explain(text)
+        print(f'"{text}" -> predicted={predicted_label}, true={true_label} ({reason})')
 
     if total == 0:
         print("\nNo labeled examples to evaluate.")
@@ -55,7 +56,8 @@ def run_batch_demo() -> None:
         # If explain() is implemented, show a short explanation.
         # reason = analyzer.explain(text)
         # print(f'"{text}" -> {label} ({reason})')
-        print(f'"{text}" -> {label}')
+        reason = analyzer.explain(text)
+        print(f'"{text}" -> {label} ({reason})')
 
 
 def run_interactive_loop() -> None:
@@ -79,16 +81,26 @@ def run_interactive_loop() -> None:
         # If explain() is implemented, you can include an explanation:
         # reason = analyzer.explain(user_input)
         # print(f"Model: {label} ({reason})")
-        print(f"Model: {label}")
+        reason = analyzer.explain(user_input)
+        print(f"Model: {label} ({reason})")
 
+
+from sklearn.model_selection import train_test_split
 
 if __name__ == "__main__":
-    evaluate_rule_based(SAMPLE_POSTS, TRUE_LABELS)
+    print("Training an ML model on SAMPLE_POSTS and TRUE_LABELS from dataset.py...")
 
-    run_batch_demo()
+    # 1. Split the data! (80% for training, 20% for testing)
+    train_texts, test_texts, train_labels, test_labels = train_test_split(
+        SAMPLE_POSTS, TRUE_LABELS, test_size=0.2, random_state=42
+    )
 
-    run_interactive_loop()
+    # 2. Train the model ONLY on the training data.
+    vectorizer, model = train_ml_model(train_texts, train_labels)
 
-    print("\nTip: After you explore the rule based model here,")
-    print("run `python ml_experiments.py` to try a simple ML based model")
-    print("trained on the same SAMPLE_POSTS and TRUE_LABELS.")
+    # 3. Evaluate the model ONLY on the unseen testing data.
+    print("=== Evaluating on UNSEEN Test Data ===")
+    evaluate_on_dataset(test_texts, test_labels, vectorizer, model)
+
+    # Let the user try their own examples.
+    run_interactive_loop(vectorizer, model)
