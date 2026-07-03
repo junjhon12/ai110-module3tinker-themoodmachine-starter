@@ -1,3 +1,5 @@
+import string
+
 # mood_analyzer.py
 """
 Rule based mood analyzer for short text snippets.
@@ -54,7 +56,11 @@ class MoodAnalyzer:
         """
         cleaned = text.strip().lower()
         tokens = cleaned.split()
-
+        # Remove basic punctuation so "happy." becomes "happy"
+        for punctuation_mark in string.punctuation:
+            cleaned = cleaned.replace(punctuation_mark, "")
+            
+        tokens = cleaned.split()
         return tokens
 
     # ---------------------------------------------------------------------
@@ -83,6 +89,29 @@ class MoodAnalyzer:
         #
         # Hint: if you implement negation, you may want to look at pairs of tokens,
         # like ("not", "happy") or ("never", "fun").
+        tokens = self.preprocess(text)
+        score = 0
+
+        negation_words = {"not", "never", "no", "dont", "cant", "isnt", "didnt"}
+        is_negated = False
+
+        for token in tokens:
+            # If we see a negation word, flip the switch and move to the next word
+            if token in negation_words:
+                is_negated = True
+                continue
+                
+            # Determine if we should add or subtract based on the negation switch
+            multiplier = -1 if is_negated else 1
+            
+            if token in self.positive_words:
+                score += (1 * multiplier)
+                is_negated = False  # Reset the switch after using it
+            elif token in self.negative_words:
+                score -= (1 * multiplier)
+                is_negated = False  # Reset the switch after using it
+                
+        return score
         pass
 
     # ---------------------------------------------------------------------
@@ -110,6 +139,14 @@ class MoodAnalyzer:
         #   2. Return "positive" if the score is above 0.
         #   3. Return "negative" if the score is below 0.
         #   4. Return "neutral" otherwise.
+        score = self.score_text(text)
+        
+        if score > 0:
+            return "positive"
+        elif score < 0:
+            return "negative"
+        else:
+            return "neutral"
         pass
 
     # ---------------------------------------------------------------------

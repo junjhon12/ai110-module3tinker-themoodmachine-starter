@@ -50,6 +50,15 @@ SAMPLE_POSTS = [
     "This is fine",
     "So excited for the weekend",
     "I am not happy about this",
+    # --- NEW POSTS BELOW ---
+    "Lowkey stressed but kind of proud of myself",       # Slang / Mixed
+    "I absolutely love getting stuck in traffic 🙄",     # Sarcasm / Emoji
+    "no cap this is the best day ever",                  # Slang
+    "Bruh 💀",                                           # Slang / Emoji (Usually negative/exasperated)
+    "Just woke up, going to get coffee.",                # Pure Neutral
+    "I'm so dead right now 😂",                          # Slang / Emoji (Tricky: usually means finding something very funny/positive)
+    "Idk how to feel about this new update",             # Ambiguous / Neutral
+    "the food was okay but the service was awful"        # Mixed / Negative leaning
 ]
 
 # Human labels for each post above.
@@ -65,7 +74,16 @@ TRUE_LABELS = [
     "neutral",   # "This is fine"
     "positive",  # "So excited for the weekend"
     "negative",  # "I am not happy about this"
-]
+    # --- NEW LABELS BELOW ---
+    "mixed",     # "Lowkey stressed but kind of proud of myself"
+    "negative",  # "I absolutely love getting stuck in traffic 🙄"
+    "positive",  # "no cap this is the best day ever"
+    "negative",  # "Bruh 💀"
+    "neutral",   # "Just woke up, going to get coffee."
+    "positive",  # "I'm so dead right now 😂"
+    "neutral",   # "Idk how to feel about this new update"
+    "mixed"      # "the food was okay but the service was awful"
+]   
 
 # TODO: Add 5-10 more posts and labels.
 #
