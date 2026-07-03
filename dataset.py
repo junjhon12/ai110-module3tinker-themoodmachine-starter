@@ -23,6 +23,7 @@ POSITIVE_WORDS = [
     "chill",
     "relaxed",
     "amazing",
+    "fire", "sick", "slays", "🔥", "🐐"
 ]
 
 NEGATIVE_WORDS = [
@@ -36,6 +37,7 @@ NEGATIVE_WORDS = [
     "stressed",
     "hate",
     "boring",
+    "trash", "mid", "💀", "😭", "bruh"
 ]
 
 # ---------------------------------------------------------------------
@@ -50,7 +52,7 @@ SAMPLE_POSTS = [
     "This is fine",
     "So excited for the weekend",
     "I am not happy about this",
-    # --- NEW POSTS BELOW ---
+    
     "Lowkey stressed but kind of proud of myself",       # Slang / Mixed
     "I absolutely love getting stuck in traffic 🙄",     # Sarcasm / Emoji
     "no cap this is the best day ever",                  # Slang
